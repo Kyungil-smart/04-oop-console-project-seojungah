@@ -17,6 +17,8 @@ public static class PrintText
         {
             case 'P': Console.Write("🧍");
                 break;
+            case 'I': Console.Write("🐛");
+                break;
             case '#': Console.Write("🧱");
                 break;
             case '/': Console.Write("🌿");
