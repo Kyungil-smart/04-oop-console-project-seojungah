@@ -1,0 +1,15 @@
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\bin\Debug\net10.0\PokemonClone.exe
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\bin\Debug\net10.0\PokemonClone.deps.json
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\bin\Debug\net10.0\PokemonClone.runtimeconfig.json
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\bin\Debug\net10.0\PokemonClone.dll
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\bin\Debug\net10.0\PokemonClone.pdb
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\obj\Debug\net10.0\PokemonClone.GeneratedMSBuildEditorConfig.editorconfig
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\obj\Debug\net10.0\PokemonClone.AssemblyInfoInputs.cache
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\obj\Debug\net10.0\PokemonClone.AssemblyInfo.cs
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\obj\Debug\net10.0\PokemonClone.csproj.CoreCompileInputs.cache
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\obj\Debug\net10.0\PokemonClone.sourcelink.json
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\obj\Debug\net10.0\PokemonClone.dll
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\obj\Debug\net10.0\refint\PokemonClone.dll
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\obj\Debug\net10.0\PokemonClone.pdb
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\obj\Debug\net10.0\PokemonClone.genruntimeconfig.cache
+E:\XR 개발자 부트캠프\04-oop-console-project-seojungah\PokemonClone\obj\Debug\net10.0\ref\PokemonClone.dll
