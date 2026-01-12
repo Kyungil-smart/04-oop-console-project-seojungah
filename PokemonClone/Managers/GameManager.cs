@@ -2,6 +2,18 @@ public class GameManager
 {
     public static bool IsGameOver { get; set; }
     private Player _player;
+    private static int _stepCount;
+    public static int StepCount
+    {
+        get => _stepCount;
+        set
+        {
+            _stepCount = value;
+            OnStepChanged?.Invoke(_stepCount);
+        }
+    }
+    public static Action<int> OnStepChanged;
+    
     public void Run()
     {
         Init();
@@ -28,6 +40,7 @@ public class GameManager
         
         SceneManager.AddScene("MainMenus", new MainMenusScene());
         SceneManager.AddScene("Field",new FieldScene(_player));
+        SceneManager.AddScene("Battle",new BattleScene());
         //set start scene
         SceneManager.Change("MainMenus");
     }

@@ -1,9 +1,7 @@
-
 public class Player : GameObject
 {
     public Vector Position { get; set; }
     public bool CanMove { private get; set; }
-    public int StepCount { get; set; }
     
     public Player() => Init();
 
@@ -41,7 +39,7 @@ public class Player : GameObject
         
         Vector nextPos = Position + direction;
         Position = nextPos;
-        StepCount++;
+        
     }
 
 }
