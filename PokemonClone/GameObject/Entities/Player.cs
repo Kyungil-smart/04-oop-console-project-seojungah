@@ -1,7 +1,8 @@
-public class Player : GameObject
+public class Player
 {
     public Vector Position { get; set; }
     public bool CanMove { private get; set; }
+    public Monster[]  Monsters { get; set; }
     
     public Player() => Init();
 
@@ -39,7 +40,7 @@ public class Player : GameObject
         
         Vector nextPos = Position + direction;
         Position = nextPos;
-        
+        GameManager.StepCount++;     
     }
 
 }

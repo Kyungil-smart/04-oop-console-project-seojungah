@@ -2,8 +2,8 @@ public class FieldScene : Scene
 {
     private Player _player;
 
-    public bool InGlass;
-    private Random _random = new Random();
+    private Random _random;
+    FieldData fieldData;
 
     public FieldScene(Player player)
     {
@@ -14,18 +14,17 @@ public class FieldScene : Scene
     {
         _player.Position = new Vector(9, 5);
         GameManager.OnStepChanged += StartBattleHandler;
+        _random = new Random();
+        fieldData = new FieldData();
     }
 
     public void Update()
     {
         _player.Update();
-        
-        if (InGlass) GameManager.StepCount++;
     }
 
     public void Render()
     {
-        FieldData fieldData = new FieldData();
 
         for (int y = 0; y < fieldData.Size.Y; y++)
         {
@@ -36,23 +35,20 @@ public class FieldScene : Scene
                 bool isHorizontalWall = x == 0 || x == fieldData.Size.X - 1;
                 bool isPlayer = _player.Position.Y == y && _player.Position.X == x;
                 bool isGlass = fieldData.IsGlass(fieldData.GlassArea, x, y);
-                InGlass = isPlayer && isGlass;
+                
 
                 if (isVerticalWall || isHorizontalWall)
                 {
                     '#'.Print();
                 }
-                else if (InGlass)
+                else if (isPlayer)
                 {
-                    'I'.Print();
+                    if (isGlass) 'I'.Print();
+                    else 'P'.Print();
                 }
                 else if (isGlass)
                 {
                     '/'.Print();
-                }
-                else if (isPlayer)
-                {
-                    'P'.Print();
                 }
                 else
                 {
@@ -62,14 +58,23 @@ public class FieldScene : Scene
 
             Console.WriteLine();
         }
+        
     }
 
     public void Exit()
     {
     }
+
     
-    
-    public bool CheckEnterBattle(int stepCount = 1)
+    private void StartBattleHandler(int currentStep)
+    {
+        if (CheckEnterBattle(currentStep) && IsPlayerInGlass())
+        {
+            GameManager.OnStepChanged -= StartBattleHandler;
+            SceneManager.Change("Battle");
+        }
+    }
+    public bool CheckEnterBattle(int stepCount)
     {
         
         if (_random.Next(0, 100) < stepCount)
@@ -80,13 +85,8 @@ public class FieldScene : Scene
         return false;
     }
     
-    private void StartBattleHandler(int currentStep)
+    private bool IsPlayerInGlass()
     {
-        if (CheckEnterBattle(currentStep))
-        {
-            SceneManager.Change("Battle");
-        }
+        return fieldData.IsGlass(fieldData.GlassArea, _player.Position.X, _player.Position.Y);
     }
-
-    
 }

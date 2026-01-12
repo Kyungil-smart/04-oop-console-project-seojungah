@@ -12,7 +12,7 @@ public class GameManager
             OnStepChanged?.Invoke(_stepCount);
         }
     }
-    public static Action<int> OnStepChanged;
+    public static Action<int>? OnStepChanged;
     
     public void Run()
     {
@@ -37,10 +37,11 @@ public class GameManager
     {
         IsGameOver = false;
         _player = new Player();
+        _player.Monsters = [BattleManager.GetRandomMonster(),BattleManager.GetRandomMonster()];
         
         SceneManager.AddScene("MainMenus", new MainMenusScene());
         SceneManager.AddScene("Field",new FieldScene(_player));
-        SceneManager.AddScene("Battle",new BattleScene());
+        SceneManager.AddScene("Battle",new BattleScene(_player));
         //set start scene
         SceneManager.Change("MainMenus");
     }

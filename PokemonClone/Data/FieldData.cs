@@ -14,7 +14,7 @@ public class FieldData
         glassArea1.End = new Vector(2,3);
         GlassArea glassArea2 = new GlassArea();
         glassArea2.Start = new Vector(11,1);
-        glassArea2.End = new Vector(18,4);
+        glassArea2.End = new Vector(17,4);
         GlassArea glassArea3 = new GlassArea();
         glassArea3.Start = new Vector(5,9);
         glassArea3.End = new Vector(11,11);

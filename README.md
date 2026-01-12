@@ -36,34 +36,26 @@ A W S D : 이동
 Enter: 선택
 
 # 코드 구조
-├── 📂 Manager
-│   ├── GameManager.cs (전체 흐름 제어)
-│   ├── SceneManager.cs (화면 전환 관리)
-│   └── InputManager.cs (키보드 입력 처리)
-├── 📂 GameObjects
-│   ├── GameObject.cs (interface)
-│   ├── 📂 Entities
-│   │   ├── Player.cs
-│   │   ├── Monster.cs
-│   │   └── NPC.cs
-│   └── 📂 Items
-│       ├── Potion.cs
-│       └── Pokeball.cs
-├── 📂 Scenes
-│   ├── Scene.cs (interface)
-│   ├── MainMenusScene.cs
-│   ├── FieldScene.cs
-│   └── BattleScene.cs
-├── 📂 Data
-│   ├── MonsterData.json
-│   └── FieldData.json 
-├── 📂 Utils
-│   ├── 📂 UI
-│   │   ├── Menus.cs
-│   │   ├── Vector.cs
-│   │   ├── ScreenArea.cs
-│   │   ├── TileArea.cs
-│   └── 📂 Helpers
-│       ├── PrintText.cs
-│       └── Debug.cs
+├── 📂 Manager<br>
+│   ├── GameManager.cs (전체 흐름 제어)<br>
+│   ├── SceneManager.cs (화면 전환 관리)<br>
+│   └── InputManager.cs (키보드 입력 처리)<br>
+├── 📂 GameObjects<br>
+│   ├── 📂 Entities<br>
+│   │   ├── Player.cs<br>
+│   │   └── Monster.cs<br>
+├── 📂 Scenes<br>
+│   ├── Scene.cs (interface)<br>
+│   ├── MainMenusScene.cs<br>
+│   ├── FieldScene.cs<br>
+│   └── BattleScene.cs<br>
+├── 📂 Utils<br>
+│   ├── 📂 UI<br>
+│   │   ├── Menus.cs<br>
+│   │   ├── Vector.cs<br>
+│   │   ├── ScreenArea.cs<br>
+│   │   ├── TileArea.cs<br>
+│   └── 📂 Helpers<br>
+│       ├── PrintText.cs<br>
+│       └── Debug.cs<br>
 └── Program.cs

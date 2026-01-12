@@ -46,7 +46,7 @@ public class MainMenusScene : Scene
         Console.SetCursorPosition(5, 1);
         GameName.Print(ConsoleColor.Yellow);
         
-        menu.Render(8, 5);
+        menu.Render(4, 3,Direction.Horizontal);
     }
 
     public void Exit()
