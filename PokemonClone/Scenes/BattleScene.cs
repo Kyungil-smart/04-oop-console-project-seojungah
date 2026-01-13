@@ -11,6 +11,10 @@ public class BattleScene : Scene
         _player = player;
     }
 
+    public void Init()
+    {
+    }
+
     public void Enter()
     {
         _battleMenu = new Menus();
@@ -19,6 +23,7 @@ public class BattleScene : Scene
         _battleMenu.Add("공격   ", () =>
         {
             _fieldMonster.GetDamage(_myMonster.Damage);
+            if (_fieldMonster.Health <= 0) SceneManager.Change("Field");
             BattleManager.ActionState = ActionType.PlayerAttack;
         });
         _battleMenu.Add("회복   ", () =>
@@ -27,7 +32,7 @@ public class BattleScene : Scene
 
             BattleManager.ActionState = ActionType.PlayerHealing;
         });
-        _battleMenu.Add("도망   ", () => Exit());
+        _battleMenu.Add("도망   ", () => SceneManager.Change("Field"));
 
         _myMonster = _player.Monsters[0];
         StartBattle();
@@ -35,11 +40,11 @@ public class BattleScene : Scene
 
     public void Update()
     {
-         if (_battleState == BattleState.MyTurn)
+        if (_battleState == BattleState.MyTurn)
         {
-            if (InputManager.GetKey(ConsoleKey.LeftArrow) || InputManager.GetKey(ConsoleKey.A)) 
+            if (InputManager.GetKey(ConsoleKey.LeftArrow) || InputManager.GetKey(ConsoleKey.A))
                 _battleMenu.SelectUp();
-            if (InputManager.GetKey(ConsoleKey.RightArrow) || InputManager.GetKey(ConsoleKey.D)) 
+            if (InputManager.GetKey(ConsoleKey.RightArrow) || InputManager.GetKey(ConsoleKey.D))
                 _battleMenu.SelectDown();
 
             if (InputManager.GetKey(ConsoleKey.Enter))
@@ -50,28 +55,46 @@ public class BattleScene : Scene
 
             if (InputManager.GetKey(ConsoleKey.D1))
             {
-                _myMonster = _player.Monsters[0];
+                if (!_player.Monsters[0].IsDead)
+                {
+                    _myMonster = _player.Monsters[0];
+                }
             }
             else if (InputManager.GetKey(ConsoleKey.D2))
             {
-                _myMonster = _player.Monsters[1];
+                if (!_player.Monsters[1].IsDead)
+                {
+                    _myMonster = _player.Monsters[1];
+                }
             }
             else if (InputManager.GetKey(ConsoleKey.D3))
             {
-                _myMonster = _player.Monsters[2];
+                if (!_player.Monsters[2].IsDead)
+                {
+                    _myMonster = _player.Monsters[2];
+                }
             }
             else if (InputManager.GetKey(ConsoleKey.D4))
             {
-                _myMonster = _player.Monsters[3];
+                if (!_player.Monsters[3].IsDead)
+                {
+                    _myMonster = _player.Monsters[3];
+                }
             }
         }
     }
 
     private void MonsterTurnAction()
     {
-       _battleState = BattleState.Pause;
+        _battleState = BattleState.Pause;
         Thread.Sleep(500);
         _myMonster.GetDamage(_fieldMonster.Damage);
+        if (_myMonster.Health <= 0)
+        {
+            _myMonster.Health = 0;
+            _myMonster.IsDead = true;
+        }
+
         BattleManager.ActionState = ActionType.MonsterAttack;
         Console.Clear();
         Render();
@@ -80,6 +103,7 @@ public class BattleScene : Scene
         _battleState = BattleState.MyTurn;
         Console.Clear();
         Render();
+        BattleManager.CheckBattleOver();
     }
 
     public void Render()
@@ -98,7 +122,9 @@ public class BattleScene : Scene
         Console.SetCursorPosition(8, 2);
         'P'.Print();
         Console.SetCursorPosition(20, 2);
-        'M'.Print();
+
+            'M'.Print(); 
+        
 
         Console.SetCursorPosition(3, 5);
         if (_battleState == BattleState.MyTurn)
@@ -111,11 +137,13 @@ public class BattleScene : Scene
         if (_battleState == BattleState.MyTurn)
         {
             PrintMyMonsters();
-        }else Console.WriteLine(" ");
+        }
+        else Console.WriteLine(" ");
+
         Console.WriteLine(ActionMassage());
 
         PrintStatusUI();
-        
+
         if (_battleState == BattleState.MonsterTurn)
         {
             MonsterTurnAction();
@@ -124,7 +152,10 @@ public class BattleScene : Scene
 
     public void Exit()
     {
-        SceneManager.Change("Field");
+        Console.Clear();
+        Console.SetCursorPosition(5, 1);
+        "잠시 후 마을로 이동합니다...".Print();
+        Thread.Sleep(2000);
     }
 
     private void StartBattle()
@@ -146,22 +177,25 @@ public class BattleScene : Scene
 
     private void PrintMyMonsters()
     {
+        Monster[] monsters = _player.Monsters;
 
-            Monster[] monsters = _player.Monsters;
-
-            for (int i = 0; i < monsters.Length; i++)
+        for (int i = 0; i < monsters.Length; i++)
+        {
+            if (monsters[i].IsDead)
             {
-                if (monsters[i] == _myMonster)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                }
-                Console.Write($"{i + 1}: ");
-                Console.Write($"{monsters[i].Name}   ");
-                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                
+            } else if (monsters[i] == _myMonster)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
             }
 
-            Console.WriteLine("");
-        
+            Console.Write($"{i + 1}: ");
+            Console.Write($"{monsters[i].Name}   ");
+            Console.ResetColor();
+        }
+
+        Console.WriteLine("");
     }
 
     private string ActionMassage()

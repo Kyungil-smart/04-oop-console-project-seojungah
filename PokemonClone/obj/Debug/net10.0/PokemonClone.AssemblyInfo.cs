@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PokemonClone")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d638753569d8998245a4112462f508b0e8cee11")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05621c8c8ddd2e2fca6ae6c54f093ca9117d066a")]
 [assembly: System.Reflection.AssemblyProductAttribute("PokemonClone")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PokemonClone")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

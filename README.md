@@ -13,6 +13,7 @@
 - 속성마다 스킬이 있습니다.
 
 ## Scene
+![screenshot_01](screenshot/screenshot_01.png)
 ### Map
 - 맵 영역에서 플레이어를 이동시킬 수 있습니다.
 - 풀숲에서 야생의 몬스터와 배틀에 돌입합니다.

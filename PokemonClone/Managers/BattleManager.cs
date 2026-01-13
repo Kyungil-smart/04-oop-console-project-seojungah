@@ -23,6 +23,20 @@ public class BattleManager
             Monster selected = _monsterList[index];
             return new Monster(selected.Name, selected.Health, selected.Damage, selected.Type);
         }
+
+        public static void  CheckBattleOver()
+        {
+            bool battleOver = true;
+            foreach (Monster monster in _monsterList)
+            {
+                if (monster.Health > 0)
+                {
+                    return;
+                }
+            }
+            
+            GameManager.IsGameOver = true;
+        }
 }
 
 public enum ActionType

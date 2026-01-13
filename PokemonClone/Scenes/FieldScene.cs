@@ -18,6 +18,12 @@ public class FieldScene : Scene
         fieldData = new FieldData();
     }
 
+    public void Init()
+    {
+        GameManager.StepCount = 0;
+        _random = new Random();
+    }
+
     public void Update()
     {
         _player.Update();

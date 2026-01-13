@@ -7,6 +7,7 @@ public class Monster
     public int Mana { get; set; }
     public int Damage { get; set; }
     public MonsterType Type { get; set; }
+    public bool IsDead { get; set; }
     public Monster(string name, int health, int damage, MonsterType type)
     {
         Name = name;
@@ -14,6 +15,7 @@ public class Monster
         _maxHealth=health;
         Damage = damage;
         Type = type;
+        IsDead = false;
     }
     
     

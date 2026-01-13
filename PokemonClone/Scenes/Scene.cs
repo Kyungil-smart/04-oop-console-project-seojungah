@@ -5,4 +5,5 @@ public interface Scene
         public void Update();
         public void Render();
         public void Exit();
+        public void Init();
 }

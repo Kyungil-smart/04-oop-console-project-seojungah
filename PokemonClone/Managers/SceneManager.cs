@@ -17,6 +17,7 @@ public static class SceneManager
     {
         if (!_scenes.ContainsKey(key)) return;
         
+        Current?.Init();
         Change(_scenes[key]);
     }
 
