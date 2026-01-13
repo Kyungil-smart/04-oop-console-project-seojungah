@@ -8,6 +8,7 @@ public class Player
 
     public void Init()
     {
+        Monsters = new Monster[4];
         CanMove = true;
     }
 

@@ -37,7 +37,11 @@ public class GameManager
     {
         IsGameOver = false;
         _player = new Player();
-        _player.Monsters = [BattleManager.GetRandomMonster(),BattleManager.GetRandomMonster()];
+
+        for (int i = 0; i < 4;i++)
+        {
+            _player.Monsters[i] = BattleManager.GetRandomMonster();
+        }
         
         SceneManager.AddScene("MainMenus", new MainMenusScene());
         SceneManager.AddScene("Field",new FieldScene(_player));

@@ -4,6 +4,7 @@ public class BattleScene : Scene
         private Monster _fieldMonster;
         private Monster _myMonster;
         private Player _player;
+        private BattleState _battleState = BattleState.MyTurn;
 
         public BattleScene(Player player)
         {
@@ -15,50 +16,99 @@ public class BattleScene : Scene
         _battleMenu = new Menus();
         _fieldMonster = BattleManager.GetRandomMonster();
         
-        _battleMenu.Add("공격",()=>_fieldMonster.GetDamage(_myMonster.Damage));
-        _battleMenu.Add("회복",()=>Console.WriteLine(""));
-        _battleMenu.Add("도망", ()=>Console.WriteLine(""));
-        StartBattle();
+        _battleMenu.Add("공격", () => {
+            _fieldMonster.GetDamage(_myMonster.Damage);
+            BattleManager.ActionState = ActionType.PlayerAttack;
+            
+        });
+        _battleMenu.Add("회복", () =>
+        {
+            _fieldMonster.HealingHp();
+            
+            BattleManager.ActionState = ActionType.PlayerHealing;
+        });
+        _battleMenu.Add("도망", ()=>Exit());
+        
         _myMonster = _player.Monsters[0];
+        StartBattle();
     }
 
     public void Update()
     {
-        if (InputManager.GetKey(ConsoleKey.LeftArrow) || InputManager.GetKey(ConsoleKey.A))
+        bool isPause = _battleState == BattleState.MonsterTurn;
+        if (!isPause && InputManager.GetKey(ConsoleKey.LeftArrow) || InputManager.GetKey(ConsoleKey.A))
         {
             _battleMenu.SelectUp();
         } 
         
-        if (InputManager.GetKey(ConsoleKey.RightArrow) || InputManager.GetKey(ConsoleKey.D))
+        if (!isPause && InputManager.GetKey(ConsoleKey.RightArrow) || InputManager.GetKey(ConsoleKey.D))
         {
             _battleMenu.SelectDown();
         }
 
-        if (InputManager.GetKey(ConsoleKey.Enter))
+        if (!isPause && InputManager.GetKey(ConsoleKey.Enter))
         {
+            _battleState = BattleState.MonsterTurn;
             _battleMenu.Select();
         }
+        
+        //몬스터 변경
+        if (!isPause && InputManager.GetKey(ConsoleKey.NumPad1))
+        {
+            if (_player.Monsters[0].Health <= 0) return;
+            _myMonster = _player.Monsters[0];
+        }
+        if (!isPause && InputManager.GetKey(ConsoleKey.NumPad2))
+        {
+            if (_player.Monsters[1].Health <= 0) return;
+            _myMonster = _player.Monsters[1];
+        }
+        if (!isPause && InputManager.GetKey(ConsoleKey.NumPad3))
+        {
+            if (_player.Monsters[2].Health <= 0) return;
+            _myMonster = _player.Monsters[2];
+        }
+        if (!isPause && InputManager.GetKey(ConsoleKey.NumPad4))
+        {
+            if (_player.Monsters[3].Health <= 0) return;
+            _myMonster = _player.Monsters[3];
+        }
+    }
+
+    private void MonsterTurnAction()
+    {
+        Thread.Sleep(500);
+        _myMonster.GetDamage(_fieldMonster.Damage);
+        BattleManager.ActionState = ActionType.MonsterAttack;
+        _battleState = BattleState.MyTurn;
+        Console.Clear();
+        Render();
     }
 
     public void Render()
     {
-        //characters
-        Console.SetCursorPosition(5, 1);
+        for (int i = 0; i < 5 ; i++)
+        {
+            for (int j = 0; j < 14; j++)
+            {
+                if (i == 0 || i ==4 || j==0||j==13) '#'.Print();
+                else Console.Write("  ");
+            }
+            Console.WriteLine();
+        }
+        Console.SetCursorPosition(8, 2);
         'P'.Print();
-        Console.SetCursorPosition(10, 1);
+        Console.SetCursorPosition(20, 2);
         'M'.Print();
-        Console.SetCursorPosition(5, 2);
-
-        //status
-        Console.Write($"내 {_myMonster.Name} HP:");
-        _myMonster.Health.ToString().Print();
-        Console.Write($"|\t야생의 {_fieldMonster.Name} HP:");
-        _fieldMonster.Health.ToString().Print();
         
+        Console.SetCursorPosition(3, 5);
+        _battleMenu.Render(3, 5,Direction.Vertical);
         Console.WriteLine();
-        _battleMenu.Render(4, 3,Direction.Vertical);
-        Console.WriteLine();
-        if(ActionMassage() != "") Console.WriteLine(ActionMassage());
+        PrintMyMonsters();
+        Console.WriteLine(ActionMassage());
+
+        PrintStatusUI();
+        if (_battleState == BattleState.MonsterTurn) MonsterTurnAction();
     }
 
     public void Exit()
@@ -77,31 +127,77 @@ public class BattleScene : Scene
             Console.WriteLine("\n\n");
             "\t잠시 후 배틀이 시작됩니다...".Print();
             Console.WriteLine();
-            Console.WriteLine($"\t\t{i}");
+            Console.WriteLine($"\t\t  {i}");
             Thread.Sleep(1000);
         }
 
         Console.Clear();
     }
+
+    private void PrintMyMonsters()
+    {
+        Monster[] monsters = _player.Monsters;
+
+        for (int i = 0; i < monsters.Length; i++)
+        {
+            if(monsters[i] == _myMonster)Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write($"{i + 1}: ");
+            Console.Write(monsters[i].Name);
+            Console.ResetColor();
+            Console.Write("\t");
+        }
+        Console.WriteLine("");
+    }
     
     private string ActionMassage()
     {
-
+        Console.WriteLine("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓");
+        Console.WriteLine("┃                            ┃");
+        Console.WriteLine("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+        Console.SetCursorPosition(3, 8);
         switch (BattleManager.ActionState)
         {
             case ActionType.MonsterAttack:
-                return "데미지를 받았다!";
+                return _fieldMonster.GetSkillText();
             case ActionType.MonsterHealing:
-                return "몬스터가 회복했다!";
+                return "야생의 몬스터가 회복했다!";
             case ActionType.PlayerAttack:
-                return "공격했다.";
+                return _myMonster.GetSkillText();
             case ActionType.PlayerHealing:
-                return "회복했다.";
+                return "내 몬스터가 회복했다.";
             case ActionType.None:
-                return "";
+                return "전투중...";
             default:
-                return "";
+                return "전투중...";
         }
+    }
+    
+    
+    private void PrintStatusUI()
+    {
+        //내 몬스터 스탯
+        Console.SetCursorPosition(1, 10);
+        Console.Write($"내 {_myMonster.Name}");
+        Console.SetCursorPosition(1, 11);
+        Console.Write($"HP:");
+        _myMonster.Health.ToString().Print();
+        Console.SetCursorPosition(1, 12);
+        Console.Write("MP:");
+        _myMonster.Mana.ToString().Print();
+        
+        //야생의 몬스터 스탯
+        Console.SetCursorPosition(15, 10);
+        Console.Write($"야생의 {_fieldMonster.Name}");
+        Console.SetCursorPosition(15, 11);
+        Console.Write($"HP:");
+        _fieldMonster.Health.ToString().Print();
+        Console.SetCursorPosition(15, 12);
+        Console.Write("MP:");
+        _fieldMonster.Mana.ToString().Print();
     }
 }
 
+enum BattleState
+{
+    MyTurn,MonsterTurn
+}
