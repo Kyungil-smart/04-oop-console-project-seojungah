@@ -17,6 +17,10 @@ public static class InputManager
         ConsoleKey.NumPad2,
         ConsoleKey.NumPad3,
         ConsoleKey.NumPad4,
+        ConsoleKey.D1,
+        ConsoleKey.D2,
+        ConsoleKey.D3,
+        ConsoleKey.D4,
     };
 
     public static bool GetKey(ConsoleKey input)

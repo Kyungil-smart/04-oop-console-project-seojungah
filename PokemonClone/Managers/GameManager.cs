@@ -35,6 +35,7 @@ public class GameManager
     
     private void Init()
     {
+        Console.CursorVisible = false;
         IsGameOver = false;
         _player = new Player();
 
