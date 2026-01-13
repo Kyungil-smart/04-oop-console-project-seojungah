@@ -13,11 +13,7 @@
 - 속성마다 스킬이 있습니다.
 
 ## Scene
-![screenshot_01](screenshot/screenshot_01.png)
-![screenshot_02](screenshot/screenshot_02.png)
-![screenshot_03](screenshot/screenshot_03.png)
-![screenshot_04](screenshot/screenshot_04.png)
-![screenshot_05](screenshot/screenshot_05.png)
+
 ### Map
 - 맵 영역에서 플레이어를 이동시킬 수 있습니다.
 - 풀숲에서 야생의 몬스터와 배틀에 돌입합니다.
@@ -65,3 +61,11 @@ Enter: 선택
 │       ├── PrintText.cs<br>
 │       └── Debug.cs<br>
 └── Program.cs
+
+
+## Screenshot
+![screenshot_01](screenshot/screenshot_01.png)<br/>
+![screenshot_02](screenshot/screenshot_02.png)<br/>
+![screenshot_03](screenshot/screenshot_03.png)<br/>
+![screenshot_04](screenshot/screenshot_04.png)<br/>
+![screenshot_05](screenshot/screenshot_05.png)<br/>
